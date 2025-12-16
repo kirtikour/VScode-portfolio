@@ -26,7 +26,7 @@ const SECTION_LABELS = {
   projects: 'Projects',
   contact: 'Contact',
   certifications: 'Certifications',
-  resume: 'Resume.pdf',
+  resume: 'resume.pdf',
   github: 'github.md',
   help: 'UserGuide.md'
 };

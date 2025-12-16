@@ -39,7 +39,7 @@ const explorerStructure = [
       { type: 'file', key: 'projects', label: 'Projects.jsx', icon: <FaProjectDiagram color="#4ade80" /> },
       { type: 'file', key: 'contact', label: 'Contact.jsx', icon: <FaEnvelope color="#a78bfa" /> },
       { type: 'file', key: 'certifications', label: 'Certifications.jsx', icon: <FaCertificate color="#facc15" /> },
-      { type: 'file', key: 'resume', label: 'Resume.pdf', icon: <FaFileAlt color="#e34c26" /> },
+      { type: 'file', key: 'resume', label: 'resume.pdf', icon: <FaFileAlt color="#e34c26" /> },
       { type: 'file', key: 'github', label: 'github.md', icon: <FaGithub color="#c9d1d9" /> },
     ],
   },

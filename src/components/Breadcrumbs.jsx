@@ -11,7 +11,7 @@ const Breadcrumbs = ({ activeTab }) => {
             case 'projects': return ['portfolio', 'src', 'Projects.jsx'];
             case 'contact': return ['portfolio', 'src', 'Contact.jsx'];
             case 'certifications': return ['portfolio', 'src', 'Certifications.jsx'];
-            case 'resume': return ['portfolio', 'public', 'Resume.pdf'];
+            case 'resume': return ['portfolio', 'public', 'resume.pdf'];
             case 'github': return ['portfolio', 'src', 'Github.jsx'];
             case 'help': return ['docs', 'UserGuide.md'];
             default: return ['portfolio', 'src', 'Home.jsx'];

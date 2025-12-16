@@ -14,9 +14,9 @@ const Resume = () => {
                 justifyContent: 'space-between',
                 alignItems: 'center'
             }}>
-                <span>Resume.pdf</span>
+                <span>resume.pdf</span>
                 <a
-                    href="/Resume.pdf"
+                    href="/resume.pdf"
                     download="KirtiKour_Resume.pdf"
                     style={{
                         display: 'flex',
@@ -33,7 +33,7 @@ const Resume = () => {
                 </a>
             </div>
             <iframe
-                src="/Resume.pdf"
+                src="/resume.pdf"
                 style={{ flex: 1, width: '100%', border: 'none', background: '#333' }}
                 title="Resume"
             />
