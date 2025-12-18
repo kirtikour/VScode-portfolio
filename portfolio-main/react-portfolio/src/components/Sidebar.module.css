@@ -1,0 +1,112 @@
+.sidebarContainer {
+  display: flex;
+  height: 100%;
+  width: 220px;
+  /* Wider to accommodate both bars */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow: hidden;
+  background: #252526;
+  border-right: 1px solid #1e1e1e;
+  transition: transform 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .sidebarContainer {
+    position: fixed;
+    height: 100vh;
+    z-index: 1000 !important;
+    transform: translateX(0);
+    box-shadow: 2px 0 12px rgba(0, 0, 0, 0.5);
+  }
+
+  .sidebarContainer.mobileHidden {
+    transform: translateX(-100%);
+  }
+}
+
+.activityBar {
+  width: 48px;
+  background-color: #333333;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 10px;
+  flex-shrink: 0;
+  z-index: 200;
+}
+
+.activityIcon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  color: #858585;
+  transition: color 0.2s;
+  position: relative;
+}
+
+.activityIcon:hover {
+  color: #ffffff;
+}
+
+.activityIcon.active {
+  color: #ffffff;
+  border-left: 2px solid #ffffff;
+}
+
+.activitySpacer {
+  flex: 1;
+}
+
+.explorer {
+  flex: 1;
+  background-color: #252526;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  position: relative;
+}
+
+.sidebarHeader {
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 20px;
+  padding-right: 15px;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  color: #bbbbbb;
+  text-transform: uppercase;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+  color: #e7e7e7;
+  cursor: pointer;
+  padding: 4px 0;
+  user-select: none;
+  font-size: 11px;
+}
+
+.sectionContent {
+  padding-left: 0;
+}
+
+.fileItem {
+  transition: background 0.1s;
+}
+
+.fileItem:hover {
+  background-color: #2a2d2e !important;
+  color: #ffffff !important;
+}
+
+.chevron {
+  margin-right: 4px;
+}
