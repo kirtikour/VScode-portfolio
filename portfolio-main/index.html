@@ -1,0 +1,580 @@
+<!--
+Backup of previous portfolio content:
+[...Your previous HTML is preserved here for reference.]
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kirti Kour - Developer Portfolio</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --accent: #3b82f6;
+      --bg: #18181b;
+      --bg-card: #23232a;
+      --text-main: #f3f4f6;
+      --text-secondary: #a1a1aa;
+      --code-bg: #23232a;
+      --border: #27272a;
+      --sidebar: #20232a;
+      --tab-bg: #23232a;
+      --tab-active: #18181b;
+    }
+    body {
+      background: var(--bg);
+      color: var(--text-main);
+      font-family: 'Inter', Arial, sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    /* Code editor sidebar */
+    .editor-sidebar {
+      position: fixed;
+      left: 0; top: 0; bottom: 0;
+      width: 60px;
+      background: var(--sidebar);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 18px 0;
+      z-index: 10;
+      box-shadow: 2px 0 8px rgba(0,0,0,0.12);
+    }
+    .editor-sidebar i {
+      color: #555;
+      font-size: 1.5rem;
+      margin: 18px 0;
+      transition: color 0.2s;
+      cursor: pointer;
+    }
+    .editor-sidebar i.active, .editor-sidebar i:hover {
+      color: var(--accent);
+    }
+    /* Code editor top bar */
+    .editor-topbar {
+      margin-left: 60px;
+      height: 38px;
+      background: var(--tab-bg);
+      display: flex;
+      align-items: center;
+      border-bottom: 1.5px solid var(--border);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      z-index: 5;
+      position: relative;
+    }
+    .editor-tab {
+      padding: 0 22px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      font-family: 'Fira Mono', monospace;
+      color: var(--text-secondary);
+      background: var(--tab-bg);
+      border-right: 1.5px solid var(--border);
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.2s, color 0.2s;
+    }
+    .editor-tab.active {
+      background: var(--tab-active);
+      color: var(--accent);
+    }
+    /* Main content area styled like code editor */
+    .editor-main {
+      margin-left: 60px;
+      margin-top: 38px;
+      min-height: calc(100vh - 38px);
+      background: var(--bg-card);
+      border-left: 1.5px solid var(--border);
+      border-right: 1.5px solid var(--border);
+      box-shadow: 0 4px 32px rgba(0,0,0,0.10);
+      padding: 0 0 40px 0;
+      position: relative;
+    }
+    .hero {
+      min-height: 60vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      padding-top: 60px;
+    }
+    .hero-title {
+      font-family: 'Fira Mono', monospace;
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+      letter-spacing: 1px;
+      display: inline-block;
+      position: relative;
+    }
+    .blinking-cursor {
+      display: inline-block;
+      width: 1ch;
+      color: var(--accent);
+      background: none;
+      animation: blink 1s steps(1) infinite;
+      font-size: 2.8rem;
+      font-family: 'Fira Mono', monospace;
+      vertical-align: bottom;
+    }
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+    .hero-tagline {
+      font-size: 1.3rem;
+      color: var(--text-secondary);
+      margin-bottom: 1.5rem;
+      font-family: 'Fira Mono', monospace;
+    }
+    .hero-social {
+      display: flex;
+      gap: 22px;
+      justify-content: center;
+      margin-bottom: 2.5rem;
+    }
+    .hero-social a {
+      color: var(--accent);
+      background: var(--code-bg);
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      border: 2px solid var(--border);
+      transition: background 0.2s, color 0.2s, border 0.2s;
+      text-decoration: none;
+    }
+    .hero-social a:hover {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+    .section {
+      max-width: 800px;
+      margin: 0 auto 60px auto;
+      padding: 0 18px;
+    }
+    .section-title {
+      font-family: 'Fira Mono', monospace;
+      color: var(--accent);
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-align: left;
+    }
+    .about {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      margin-bottom: 2.5rem;
+    }
+    .tech-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 2.5rem;
+    }
+    .tech-badge {
+      background: var(--code-bg);
+      color: var(--accent);
+      font-family: 'Fira Mono', monospace;
+      font-size: 1rem;
+      border-radius: 6px;
+      padding: 7px 16px;
+      border: 1.5px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      transition: background 0.2s, color 0.2s;
+    }
+    .tech-badge i {
+      font-size: 1.1em;
+    }
+    .projects {
+      display: grid;
+      gap: 32px;
+    }
+    .project-card {
+      background: var(--bg-card);
+      border-radius: 12px;
+      border: 1.5px solid var(--border);
+      padding: 28px 24px 20px 24px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+      position: relative;
+      overflow: hidden;
+    }
+    .project-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 0.7rem;
+    }
+    .project-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 5px;
+    }
+    .dot-red { background: #ef4444; }
+    .dot-yellow { background: #fbbf24; }
+    .dot-green { background: #22c55e; }
+    .project-title {
+      font-family: 'Fira Mono', monospace;
+      color: var(--accent);
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.2rem;
+    }
+    .project-desc {
+      color: var(--text-secondary);
+      font-size: 1rem;
+      margin-bottom: 0.7rem;
+    }
+    .project-tech {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 0.7rem;
+    }
+    .project-links {
+      display: flex;
+      gap: 16px;
+    }
+    .project-link {
+      color: var(--accent);
+      text-decoration: none;
+      font-family: 'Fira Mono', monospace;
+      font-size: 1rem;
+      border-bottom: 1.5px solid var(--accent);
+      transition: color 0.2s, border 0.2s;
+    }
+    .project-link:hover {
+      color: #fff;
+      border-bottom: 1.5px solid #fff;
+    }
+    .contact-section {
+      text-align: center;
+      margin-top: 60px;
+      margin-bottom: 40px;
+    }
+    .contact-title {
+      font-family: 'Fira Mono', monospace;
+      color: var(--accent);
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+    .contact-email {
+      font-family: 'Fira Mono', monospace;
+      color: var(--accent);
+      font-size: 1.1rem;
+      margin-bottom: 1.2rem;
+      display: block;
+    }
+    .contact-social {
+      display: flex;
+      gap: 18px;
+      justify-content: center;
+      margin-top: 1.2rem;
+    }
+    .contact-social a {
+      color: var(--accent);
+      font-size: 1.5rem;
+      transition: color 0.2s;
+      text-decoration: none;
+    }
+    .contact-social a:hover {
+      color: #fff;
+    }
+    @media (max-width: 900px) {
+      .editor-main { margin-left: 0; }
+      .editor-sidebar { display: none; }
+      .editor-topbar { margin-left: 0; }
+    }
+    @media (max-width: 600px) {
+      .hero-title { font-size: 2rem; }
+      .section-title { font-size: 1.2rem; }
+      .project-title { font-size: 1rem; }
+      .project-card { padding: 16px 8px 12px 8px; }
+    }
+    .hero {
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg-animated {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      z-index: 0;
+      background: linear-gradient(120deg, rgba(59,130,246,0.10) 0%, rgba(34,197,94,0.10) 100%);
+      animation: heroGradientMove 8s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+    @keyframes heroGradientMove {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+    .hero > *:not(.hero-bg-animated) {
+      position: relative;
+      z-index: 1;
+    }
+    #ctaProjects:hover {
+      background: #2563eb;
+      transform: translateY(-2px) scale(1.04);
+    }
+  </style>
+</head>
+<body>
+  <div class="editor-sidebar">
+    <i class="fas fa-folder-open active" title="Files"></i>
+    <i class="fas fa-search" title="Search"></i>
+    <i class="fas fa-code" title="Source Control"></i>
+    <i class="fas fa-bug" title="Debug"></i>
+    <i class="fas fa-cog" title="Settings"></i>
+  </div>
+  <div class="editor-topbar">
+    <div class="editor-tab active" data-section="hero-section">portfolio.js</div>
+    <div class="editor-tab" data-section="about-section">about.md</div>
+    <div class="editor-tab" data-section="skills-section">skills.js</div>
+    <div class="editor-tab" data-section="projects-section">projects.json</div>
+    <div class="editor-tab" data-section="contact-section">contact.html</div>
+  </div>
+  <div class="editor-main">
+    <section class="hero" id="hero-section">
+      <canvas id="codeLinesBg" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;"></canvas>
+      <div style="position:relative;display:flex;flex-direction:column;align-items:center;">
+        <img src="images/kirtikour.jpeg" alt="Kirti Kour" style="width:150px;height:150px;border-radius:50%;object-fit:cover;border:4px solid var(--accent);margin-bottom:18px;box-shadow:0 6px 32px rgba(59,130,246,0.18),0 2px 12px rgba(0,0,0,0.18);background:#23232a;">
+        <div style="position:absolute;bottom:18px;right:calc(50% - 60px);background:var(--accent);color:#fff;border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;box-shadow:0 2px 8px rgba(0,0,0,0.10);border:2px solid #fff;">👋</div>
+      </div>
+      <div class="hero-title">Kirti Kour<span class="blinking-cursor">|</span></div>
+      <div class="hero-tagline">Full Stack Developer</div>
+      <div style="max-width:420px;margin:0 auto 1.2rem auto;color:var(--text-secondary);font-size:1.13rem;line-height:1.6;">
+        I'm a passionate full stack developer building modern web applications with React, Node.js, Python, and more. I love turning ideas into reality through code and design.
+      </div>
+      <button id="ctaProjects" style="margin:0 auto 1.5rem auto;padding:13px 38px;font-size:1.1rem;font-family:'Fira Mono',monospace;font-weight:700;border-radius:30px;background:var(--accent);color:#fff;border:none;box-shadow:0 2px 12px rgba(59,130,246,0.10);cursor:pointer;transition:background 0.2s,transform 0.2s;display:block;">View My Work</button>
+      <div style="display:flex;gap:18px;justify-content:center;margin-bottom:1.7rem;">
+        <i class="fab fa-react" style="color:#61dafb;font-size:2.1rem;"></i>
+        <i class="fab fa-node-js" style="color:#3c873a;font-size:2.1rem;"></i>
+        <i class="fab fa-python" style="color:#3776ab;font-size:2.1rem;"></i>
+        <i class="fab fa-js-square" style="color:#f7df1e;font-size:2.1rem;"></i>
+        <i class="fab fa-git-alt" style="color:#f05032;font-size:2.1rem;"></i>
+      </div>
+      <div style="color:var(--accent);font-family:'Fira Mono',monospace;font-size:1.1rem;margin-bottom:0.5rem;">// Let's Connect</div>
+      <div class="hero-social">
+        <a href="https://github.com/kirtikour" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+        <a href="https://linkedin.com/in/kirtikour" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+        <a href="mailto:kirtikour.bscsf22@iba-suk.edu.pk" title="Email"><i class="fas fa-envelope"></i></a>
+      </div>
+      <div class="hero-bg-animated"></div>
+    </section>
+    <div class="section" id="about-section" style="max-width:700px;margin:0 auto 60px auto;padding:0 18px;display:none;">
+      <div style="background:var(--code-bg);border-radius:8px;padding:32px 24px 24px 24px;border:1.5px solid var(--border);box-shadow:0 2px 12px rgba(0,0,0,0.08);font-family:'Fira Mono',monospace;">
+        <div style="color:var(--accent);font-size:1.5rem;font-weight:700;margin-bottom:1.2rem;"># About Me</div>
+        <div style="color:var(--text-secondary);font-size:1.08rem;line-height:1.7;">
+          Hi, I'm Kirti. I build web applications with React, Node.js, Python, and more.<br>
+          I love solving problems and creating seamless digital experiences.<br><br>
+          <span style="color:var(--accent);font-weight:700;">Education:</span><br>
+          <span style="color:var(--text-main);font-weight:600;">Bachelor of Science in Computer Science</span><br>
+          Sukkur IBA University<br>
+          2022 - Present<br>
+          <span style="color:var(--accent);font-weight:600;">CGPA:</span> 3.68/4.00
+        </div>
+      </div>
+    </div>
+    <div class="section" id="skills-section" style="max-width:700px;margin:0 auto 60px auto;padding:0 18px;display:none;">
+      <div style="background:var(--code-bg);border-radius:8px;padding:32px 24px 24px 24px;border:1.5px solid var(--border);box-shadow:0 2px 12px rgba(0,0,0,0.08);font-family:'Fira Mono',monospace;">
+        <div style="color:var(--accent);font-size:1.5rem;font-weight:700;margin-bottom:1.2rem;">// Skills</div>
+        <div style="margin-bottom:1.2rem;color:var(--text-secondary);font-size:1.08rem;">Here are the technologies and tools I work with:</div>
+        <div style="margin-bottom:1.2rem;"><span style="color:var(--accent);font-weight:700;">Languages:</span></div>
+        <div class="tech-stack" style="margin-bottom:1.2rem;">
+          <div class="tech-badge"><i class="fab fa-js-square"></i> JavaScript</div>
+          <div class="tech-badge"><i class="fab fa-python"></i> Python</div>
+          <div class="tech-badge"><i class="fab fa-java"></i> Java</div>
+          <div class="tech-badge"><i class="fas fa-code"></i> C++</div>
+          <div class="tech-badge"><i class="fab fa-html5"></i> HTML</div>
+          <div class="tech-badge"><i class="fab fa-css3-alt"></i> CSS</div>
+        </div>
+        <div style="margin-bottom:1.2rem;"><span style="color:var(--accent);font-weight:700;">Frameworks & Libraries:</span></div>
+        <div class="tech-stack" style="margin-bottom:1.2rem;">
+          <div class="tech-badge"><i class="fab fa-react"></i> React.js</div>
+          <div class="tech-badge"><i class="fab fa-node-js"></i> Node.js</div>
+          <div class="tech-badge"><i class="fas fa-server"></i> Express.js</div>
+          <div class="tech-badge"><i class="fab fa-python"></i> Django</div>
+          <div class="tech-badge"><i class="fab fa-bootstrap"></i> Bootstrap</div>
+          <div class="tech-badge"><i class="fas fa-wind"></i> Tailwind CSS</div>
+        </div>
+        <div style="margin-bottom:1.2rem;"><span style="color:var(--accent);font-weight:700;">AI/ML & Data Science:</span></div>
+        <div class="tech-stack" style="margin-bottom:1.2rem;">
+          <div class="tech-badge"><i class="fas fa-brain"></i> TensorFlow</div>
+          <div class="tech-badge"><i class="fas fa-robot"></i> Keras</div>
+          <div class="tech-badge"><i class="fas fa-chart-line"></i> NumPy</div>
+          <div class="tech-badge"><i class="fas fa-table"></i> Pandas</div>
+          <div class="tech-badge"><i class="fas fa-eye"></i> OpenCV</div>
+          <div class="tech-badge"><i class="fas fa-microscope"></i> Scikit-learn</div>
+        </div>
+        <div style="margin-bottom:1.2rem;"><span style="color:var(--accent);font-weight:700;">Tools & Databases:</span></div>
+        <div class="tech-stack">
+          <div class="tech-badge"><i class="fas fa-leaf"></i> MongoDB</div>
+          <div class="tech-badge"><i class="fas fa-database"></i> MySQL</div>
+          <div class="tech-badge"><i class="fab fa-git-alt"></i> Git/GitHub</div>
+          <div class="tech-badge"><i class="fab fa-google"></i> Google Colab</div>
+          <div class="tech-badge"><i class="fas fa-code"></i> VS Code</div>
+          <div class="tech-badge"><i class="fab fa-wordpress"></i> WordPress</div>
+          <div class="tech-badge"><i class="fas fa-coffee"></i> NetBeans</div>
+        </div>
+      </div>
+    </div>
+    <div class="section" id="projects-section" style="display:none;">
+      <div class="section-title">Projects</div>
+      <div class="projects">
+        <div class="project-card">
+          <div class="project-header">
+            <span class="project-dot dot-red"></span>
+            <span class="project-dot dot-yellow"></span>
+            <span class="project-dot dot-green"></span>
+            <span class="project-title">HEALR</span>
+          </div>
+          <div class="project-desc">A web-based healthcare platform for booking doctor appointments, managing patient-doctor interactions, and virtual consultations.</div>
+          <div class="project-tech">
+            <span class="tech-badge">React</span>
+            <span class="tech-badge">Express</span>
+            <span class="tech-badge">Node.js</span>
+            <span class="tech-badge">MongoDB</span>
+          </div>
+          <div class="project-links">
+            <a href="#" class="project-link">Demo</a>
+            <a href="#" class="project-link">GitHub</a>
+          </div>
+        </div>
+        <div class="project-card">
+          <div class="project-header">
+            <span class="project-dot dot-red"></span>
+            <span class="project-dot dot-yellow"></span>
+            <span class="project-dot dot-green"></span>
+            <span class="project-title">Handwritten Notes Recognition</span>
+          </div>
+          <div class="project-desc">AI-powered system that recognizes English handwritten characters using Convolutional Neural Networks.</div>
+          <div class="project-tech">
+            <span class="tech-badge">Python</span>
+            <span class="tech-badge">TensorFlow</span>
+            <span class="tech-badge">Keras</span>
+            <span class="tech-badge">OpenCV</span>
+          </div>
+          <div class="project-links">
+            <a href="#" class="project-link">Demo</a>
+            <a href="#" class="project-link">GitHub</a>
+          </div>
+        </div>
+        <div class="project-card">
+          <div class="project-header">
+            <span class="project-dot dot-red"></span>
+            <span class="project-dot dot-yellow"></span>
+            <span class="project-dot dot-green"></span>
+            <span class="project-title">Cookify</span>
+          </div>
+          <div class="project-desc">Full-stack recipe management app with category filtering, search, and dynamic recipe rendering.</div>
+          <div class="project-tech">
+            <span class="tech-badge">React</span>
+            <span class="tech-badge">Django</span>
+            <span class="tech-badge">HTML</span>
+            <span class="tech-badge">Bootstrap</span>
+          </div>
+          <div class="project-links">
+            <a href="#" class="project-link">Demo</a>
+            <a href="#" class="project-link">GitHub</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="section contact-section" id="contact-section" style="display:none;">
+      <div class="contact-title">Contact</div>
+      <span class="contact-email">kirtikour.bscsf22@iba-suk.edu.pk</span>
+      <div class="contact-social">
+        <a href="https://github.com/kirtikour" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+        <a href="https://linkedin.com/in/kirtikour" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+        <a href="mailto:kirtikour.bscsf22@iba-suk.edu.pk" title="Email"><i class="fas fa-envelope"></i></a>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Tab switching logic
+    document.querySelectorAll('.editor-tab').forEach(tab => {
+      tab.addEventListener('click', function() {
+        document.querySelectorAll('.editor-tab').forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+        document.getElementById('hero-section').style.display = 'none';
+        document.getElementById('about-section').style.display = 'none';
+        document.getElementById('skills-section').style.display = 'none';
+        document.getElementById('projects-section').style.display = 'none';
+        document.getElementById('contact-section').style.display = 'none';
+        document.getElementById(this.getAttribute('data-section')).style.display = '';
+      });
+    });
+    // On load, show only hero-section
+    document.getElementById('hero-section').style.display = '';
+    document.getElementById('about-section').style.display = 'none';
+    document.getElementById('skills-section').style.display = 'none';
+    document.getElementById('projects-section').style.display = 'none';
+    document.getElementById('contact-section').style.display = 'none';
+    // CTA button switches to projects tab
+    document.addEventListener('DOMContentLoaded', function() {
+      var ctaBtn = document.getElementById('ctaProjects');
+      if (ctaBtn) {
+        ctaBtn.onclick = function() {
+          document.querySelector('.editor-tab[data-section="projects-section"]').click();
+        };
+      }
+    });
+    // Animated code lines background for hero
+    function animateCodeLines() {
+      const canvas = document.getElementById('codeLinesBg');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      function resize() {
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+      }
+      resize();
+      window.addEventListener('resize', resize);
+      const lines = Array.from({length: 18}, (_,i) => ({
+        y: 30 + i * 28 + Math.random()*10,
+        x: Math.random()*canvas.width,
+        w: 120 + Math.random()*canvas.width*0.5,
+        speed: 0.2 + Math.random()*0.4,
+        alpha: 0.08 + Math.random()*0.13
+      }));
+      function draw() {
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        for(const l of lines) {
+          ctx.globalAlpha = l.alpha;
+          ctx.beginPath();
+          ctx.moveTo(l.x, l.y);
+          ctx.lineTo(l.x + l.w, l.y);
+          ctx.lineWidth = 3.2;
+          ctx.strokeStyle = '#fff';
+          ctx.stroke();
+          l.x += l.speed;
+          if(l.x > canvas.width) l.x = -l.w;
+        }
+        ctx.globalAlpha = 1;
+        requestAnimationFrame(draw);
+      }
+      draw();
+    }
+    document.addEventListener('DOMContentLoaded', animateCodeLines);
+  </script>
+</body>
+</html>
+
