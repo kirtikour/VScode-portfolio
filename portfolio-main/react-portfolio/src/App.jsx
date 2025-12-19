@@ -189,9 +189,23 @@ function App() {
 
   const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
 
+  // Sidebar View State
+  const [sidebarView, setSidebarView] = useState('explorer');
+
+  // Handle switching views from Header
+  const handleSidebarViewChange = (view) => {
+    setSidebarView(view);
+    if (!isSidebarOpen) setIsSidebarOpen(true);
+  };
+
   return (
     <div className={styles.appContainer}>
-      <Header onToggleTerminal={toggleTerminal} onNavigate={handleSectionChange} onToggleSidebar={toggleSidebar} />
+      <Header
+        onToggleTerminal={toggleTerminal}
+        onNavigate={handleSectionChange}
+        onToggleSidebar={toggleSidebar}
+        onOpenView={handleSidebarViewChange}
+      />
 
       <div className={styles.vscodeLayout + ' d-flex'} style={{ position: 'relative', overflow: 'hidden' }}>
 
@@ -211,6 +225,9 @@ function App() {
           }}
           isOpen={isSidebarOpen}
           isMobile={isMobile}
+          onToggle={toggleSidebar}
+          activeView={sidebarView}
+          onViewChange={setSidebarView}
         />
 
         <div
@@ -219,7 +236,7 @@ function App() {
             position: 'relative',
             overflowY: 'auto',
             overflowX: 'hidden',
-            marginLeft: isMobile ? 0 : 220, // Match sidebar width exactly
+            marginLeft: isMobile ? 0 : (isSidebarOpen ? 220 : 48), // 220px open, 48px collapsed (icons only)
             display: 'flex',
             flexDirection: 'column',
             transition: 'margin-left 0.3s ease'

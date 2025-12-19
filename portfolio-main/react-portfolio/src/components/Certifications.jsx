@@ -130,31 +130,25 @@ const Certifications = () => {
           href="https://linkedin.com/in/kirtikour"
           target="_blank"
           rel="noreferrer"
-          className="linkedin-btn"
+          className="linkedin-link"
           style={{
             display: 'inline-flex',
             alignItems: 'center',
-            gap: 10,
-            padding: '12px 28px',
-            borderRadius: 100,
-            background: '#0a66c2',
-            color: '#fff',
-            fontWeight: 600,
+            gap: 8,
+            color: '#58a6ff',
             textDecoration: 'none',
             fontSize: '1rem',
-            transition: 'transform 0.2s, background 0.2s, box-shadow 0.2s',
-            boxShadow: '0 4px 14px rgba(10, 102, 194, 0.3)'
+            transition: 'color 0.2s',
           }}
         >
-          <FaLinkedin size={20} /> Connect on LinkedIn
+          <FaLinkedin size={18} /> More certificates on LinkedIn
         </a>
       </div>
 
       <style>{`
-        .linkedin-btn:hover { 
-          background: #004182 !important; 
-          transform: translateY(-2px);
-          box-shadow: 0 6px 20px rgba(10, 102, 194, 0.4) !important;
+        .linkedin-link:hover { 
+          color: #79c0ff !important;
+          text-decoration: underline !important;
         }
       `}</style>
     </div>

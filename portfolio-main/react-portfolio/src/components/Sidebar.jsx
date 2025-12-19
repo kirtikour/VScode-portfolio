@@ -606,47 +606,64 @@ const SettingsView = () => {
 
 // --- Main Sidebar Component ---
 
-const Sidebar = ({ activeSection, onSectionChange, isOpen, isMobile }) => {
-  const [activeView, setActiveView] = useState('explorer'); // explorer, search, git, debug, extensions, account, settings
+const Sidebar = ({ activeSection, onSectionChange, isOpen, isMobile, onToggle, activeView, onViewChange }) => {
+  // const [activeView, setActiveView] = useState('explorer'); <- Lifted to App.jsx
+
+  const handleViewChange = (view) => {
+    if (activeView === view && isOpen) {
+      if (onToggle) onToggle(); // Close if clicking active view
+    } else {
+      if (!isOpen && onToggle) onToggle(); // Open if closed
+      onViewChange(view);
+    }
+  };
 
   return (
     <aside
       className={`${styles.sidebarContainer} ${isMobile && !isOpen ? styles.mobileHidden : ''}`}
-      style={{ position: 'absolute', left: 0, top: 0, height: '100%', minHeight: '100%', zIndex: 100 }}
+      style={{
+        position: isMobile ? 'fixed' : 'absolute',
+        left: 0,
+        top: 0,
+        height: '100%',
+        minHeight: '100%',
+        zIndex: 100,
+        width: isMobile ? 220 : (isOpen ? 220 : 48) // Dynamic width on desktop
+      }}
     >
       {/* Activity Bar */}
       <div className={styles.activityBar}>
         <div
-          className={`${styles.activityIcon} ${activeView === 'explorer' ? styles.active : ''}`}
-          onClick={() => setActiveView('explorer')}
+          className={`${styles.activityIcon} ${activeView === 'explorer' && isOpen ? styles.active : ''}`}
+          onClick={() => handleViewChange('explorer')}
           title="Explorer (Ctrl+Shift+E)"
         >
           <VscFiles size={24} />
         </div>
         <div
-          className={`${styles.activityIcon} ${activeView === 'search' ? styles.active : ''}`}
-          onClick={() => setActiveView('search')}
+          className={`${styles.activityIcon} ${activeView === 'search' && isOpen ? styles.active : ''}`}
+          onClick={() => handleViewChange('search')}
           title="Search (Ctrl+Shift+F)"
         >
           <VscSearch size={24} />
         </div>
         <div
-          className={`${styles.activityIcon} ${activeView === 'git' ? styles.active : ''}`}
-          onClick={() => setActiveView('git')}
+          className={`${styles.activityIcon} ${activeView === 'git' && isOpen ? styles.active : ''}`}
+          onClick={() => handleViewChange('git')}
           title="Source Control (Ctrl+Shift+G)"
         >
           <VscSourceControl size={24} />
         </div>
         <div
-          className={`${styles.activityIcon} ${activeView === 'debug' ? styles.active : ''}`}
-          onClick={() => setActiveView('debug')}
+          className={`${styles.activityIcon} ${activeView === 'debug' && isOpen ? styles.active : ''}`}
+          onClick={() => handleViewChange('debug')}
           title="Run and Debug (Ctrl+Shift+D)"
         >
           <VscDebugAlt size={24} />
         </div>
         <div
-          className={`${styles.activityIcon} ${activeView === 'extensions' ? styles.active : ''}`}
-          onClick={() => setActiveView('extensions')}
+          className={`${styles.activityIcon} ${activeView === 'extensions' && isOpen ? styles.active : ''}`}
+          onClick={() => handleViewChange('extensions')}
           title="Extensions (Ctrl+Shift+X)"
         >
           <VscExtensions size={24} />
@@ -655,29 +672,33 @@ const Sidebar = ({ activeSection, onSectionChange, isOpen, isMobile }) => {
         <div className={styles.activitySpacer} />
 
         <div
-          className={`${styles.activityIcon} ${activeView === 'account' ? styles.active : ''}`}
-          onClick={() => setActiveView('account')}
+          className={`${styles.activityIcon} ${activeView === 'account' && isOpen ? styles.active : ''}`}
+          onClick={() => handleViewChange('account')}
           title="Accounts"
         >
           <VscAccount size={24} />
         </div>
         <div
-          className={`${styles.activityIcon} ${activeView === 'settings' ? styles.active : ''}`}
-          onClick={() => setActiveView('settings')}
+          className={`${styles.activityIcon} ${activeView === 'settings' && isOpen ? styles.active : ''}`}
+          onClick={() => handleViewChange('settings')}
           title="Manage & Settings"
         >
           <VscSettingsGear size={24} />
         </div>
       </div>
 
-      {/* Sidebar Content Pane */}
-      {activeView === 'explorer' && <ExplorerView activeSection={activeSection} onSectionChange={onSectionChange} />}
-      {activeView === 'search' && <SearchView onSectionChange={onSectionChange} />}
-      {activeView === 'git' && <GitView />}
-      {activeView === 'debug' && <DebugView />}
-      {activeView === 'extensions' && <ExtensionsView />}
-      {activeView === 'account' && <AccountView />}
-      {activeView === 'settings' && <SettingsView />}
+      {/* Sidebar Content Pane - Only render if open */}
+      {isOpen && (
+        <>
+          {activeView === 'explorer' && <ExplorerView activeSection={activeSection} onSectionChange={onSectionChange} />}
+          {activeView === 'search' && <SearchView onSectionChange={onSectionChange} />}
+          {activeView === 'git' && <GitView />}
+          {activeView === 'debug' && <DebugView />}
+          {activeView === 'extensions' && <ExtensionsView />}
+          {activeView === 'account' && <AccountView />}
+          {activeView === 'settings' && <SettingsView />}
+        </>
+      )}
 
     </aside>
   );
